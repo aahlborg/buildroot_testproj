@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_TEST_PROJECT_PATH/package/ssd1306_demo/Config.in"

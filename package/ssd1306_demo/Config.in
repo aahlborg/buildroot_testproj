@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SSD1306_DEMO
+	bool "ssd1306_demo"
+	select BR2_PACKAGE_WIRINGPI
+	help
+	  A demo for the SSD1306 OLED display
+
+	  https://github.com/iliapenev/ssd1306_i2c

@@ -1,0 +1,62 @@
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..4744b29
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,7 @@
++all: demo
++
++demo:
++	$(CC) -o demo demo.c ssd1306_i2c.c -lwiringPi
++
++clean:
++	rm -f demo
+diff --git a/demo.c b/demo.c
+index a68abdd..0e027a5 100644
+--- a/demo.c
++++ b/demo.c
+@@ -2,27 +2,30 @@
+ Demo for ssd1306 i2c driver for  Raspberry Pi 
+ ******/
+ 
++#include "stdio.h"
+ #include "ssd1306_i2c.h"
+ 
++int get_uptime(void) {
++
++	FILE *fp;
++	float time;
++	int msecs;
++	fp = fopen("/proc/uptime", "r");
++	fscanf(fp, "%f", &time);
++	msecs = (int)(time * 1000);
++	return msecs;
++}
++
+ void main() {
+ 
+ 	ssd1306_begin(SSD1306_SWITCHCAPVCC, SSD1306_I2C_ADDRESS);
+ 
+-	ssd1306_display(); //Adafruit logo is visible
+ 	ssd1306_clearDisplay();
+-	delay(5000);
+ 
+-	char* text = "This is demo for SSD1306 i2c driver for Raspberry Pi";
+-	ssd1306_drawString(text);
+-	ssd1306_display();
+-	delay(5000);
+-
+-	ssd1306_dim(1);
+-	ssd1306_startscrollright(00,0xFF);
+-	delay(5000);
+-
+-	ssd1306_clearDisplay();
+-	ssd1306_fillRect(10,10, 50, 20, WHITE);
+-	ssd1306_fillRect(80, 10, 130, 50, WHITE);
++	int uptime = get_uptime();
++	char* text = "%u\nThis is demo for SSD1306 i2c driver for Raspberry Pi";
++	char buf[100];
++	sprintf(buf, text, uptime);
++	ssd1306_drawString(buf);
+ 	ssd1306_display();
+ }
