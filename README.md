@@ -4,7 +4,22 @@ This sample project uses a default raspberry pi configuration and configures it 
 
 ## Building
 
-Run 'setup.sh' to configure directories and then run 'make -c build' to build the project.
+Run
+
+    make -C buildroot O=../build BR2_EXTERNAL=.. test_defconfig
+
+to configure directories and then run
+
+    make -c build
+
+to build the project.
+
+Saving the config to the repo
+
+    make -C build savedefconfig BR2_DEFCONFIG=../configs/test_defconfig
+
+## TODO
+
 
 ## Modifications
 
@@ -20,7 +35,7 @@ Run these commands
 
     ::sysinit:/sbin/modprobe i2c-dev
     ::sysinit:/sbin/modprobe i2c-bcm2835
-    ::sysinit:/bin/demo
+    ::sysinit:/usr/bin/demo
 
 ### /boot/config.txt
 
@@ -30,4 +45,4 @@ Activate I2C
 
 ### /bin/demo
 
-Built out-of-tree for now
+Added as ssd1306_demo package
