@@ -8,7 +8,7 @@ Run
 
     make -C buildroot O=../build BR2_EXTERNAL=.. test_defconfig
 
-to configure directories and then run
+or use _setup.sh_ to configure directories and then run
 
     make -C build
 
@@ -18,30 +18,29 @@ Saving the config to the repo
 
     make -C build savedefconfig BR2_DEFCONFIG=../configs/test_defconfig
 
-## TODO
+Saving the Linux config to the repo
 
+    make -C build linux-update-defconfig
 
 ## Modifications
 
-Based on raspberrypi_defconfig
+Based on raspberrypi_defconfigs
+
+### Linux kernel
+
+Removed USB and network to speed up boot time
 
 ### menuconfig
 
 Enable console on ttyAMA0
 
-### /etc/inittab
+### /etc/init.d/S00-ssd1306
 
-Run these commands
-
-    ::sysinit:/sbin/modprobe i2c-dev
-    ::sysinit:/sbin/modprobe i2c-bcm2835
-    ::sysinit:/usr/bin/demo
+Init script added to load i2c driver and start the demo application.
 
 ### /boot/config.txt
 
-Activate I2C
-
-    dtparam=i2c_arm=on
+Config file is patched in post-build to activate I2C in device tree
 
 ### /bin/demo
 
