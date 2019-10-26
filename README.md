@@ -10,7 +10,7 @@ Run
 
 to configure directories and then run
 
-    make -c build
+    make -C build
 
 to build the project.
 
